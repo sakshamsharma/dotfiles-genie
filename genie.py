@@ -93,21 +93,41 @@ for _file in configObject.files:
         if _modified:
             print("  Version has been modified. Diff:")
             subprocess.call(["diff", _readFrom, _file['placed']])
+            print("")
 
-            # TODO check if this thing is already in the yaml
-            print("Replace/Backup?")
+            # 2 means not known
+            _toBackup = 2
+            if "action" in _file:
+                if _file['action'] == "backup":
+                    _toBackup = 1
+                elif _file['action'] == "nobackup":
+                    _toBackup = 0
+                elif _file['action'] == "donothing":
+                    action = 2
 
-            # TODO Check for user's opinion and set action accordingly
+            # If nothing was written, ask user
+            if (_toBackup == 1 or _toBackup == 2) and action != 2:
+                if _toBackup == 2:
+                    print("  Backup, Replace or skip? (b,r,s): ")
+                    inp = input()
+                    if inp == "r":
+                        _toBackup = 0
+                    elif inp == "s":
+                        _toBackup = 0
+                        action = 2
+                    else:
+                        _toBackup = 1
 
-            # Assume backup
-            # TODO allow multiple backups to persist
-            recursiveAction(_readFrom, genieCwd + "/.backups/" + _file['placed'], 1)
+                if _toBackup == 1:
+                    # TODO allow multiple backups to persist
+                    print("  Backing up file")
+                    recursiveAction(_readFrom, genieCwd + "/.backups/" + _file['placed'], 1)
 
         else:
             print("  Files are same, not copying")
             action = 1
 
-    # Skip this file now
+    # Skip this file now if user skipped, or files were same
     if action == 1 or action == 2:
         continue
 
@@ -115,7 +135,7 @@ for _file in configObject.files:
     if "plainCopy" in _file:
         action = 3
 
-    # Symlink
+    # Symlink if its plain old symlinked based action
     if action == 0:
         try:
             os.remove(_location)
@@ -124,7 +144,7 @@ for _file in configObject.files:
         recursiveAction(os.path.join(genieCwd, _file['placed']), _location, 2)
         print("Symlinked " + _file['placed'] + " to " + _location)
 
-    # Copy
+    # Copy if user had specified so in the config
     elif action == 3:
         recursiveAction(os.path.join(genieCwd, _file['placed']), _location, 1)
         print("Copied " + _file['placed'] + " to " + _location)
