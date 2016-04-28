@@ -1,0 +1,21 @@
+!!python/object:__main__.Configuration
+# genie config file
+
+files:
+  - name: test
+    placed: test
+    location: $HOME/test
+    plainCopy: 1
+  - name: haha
+    placed: hahavim/haha
+    location: $HOME/hahavim/haha
+  #- name: vimrc
+    #placed: vimrc
+    #location: $HOME/.vimrc
+  #- name: bashrc
+    #placed: .bashrc
+    #location: $HOME/.bashrc
+
+directories:
+
+subrepos:
