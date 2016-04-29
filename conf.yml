@@ -6,9 +6,6 @@ files:
     placed: test
     location: $HOME/test
     plainCopy: 1
-  - name: haha
-    placed: hahavim/haha
-    location: $HOME/hahavim/haha
   #- name: vimrc
     #placed: vimrc
     #location: $HOME/.vimrc
@@ -17,5 +14,8 @@ files:
     #location: $HOME/.bashrc
 
 directories:
+  - name: haha
+    placed: hahavim
+    location: $HOME/hehe
 
 subrepos:
