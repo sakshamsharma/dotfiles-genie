@@ -18,6 +18,15 @@ except ImportError:
 # Move file and folder stuff to new files
 # Abstract out the asking user for options part into a global helper function
 
+def copytree(src, dst, symlinks=False, ignore=None):
+    for item in os.listdir(src):
+        s = os.path.join(src, item)
+        d = os.path.join(dst, item)
+        if os.path.isdir(s):
+            shutil.copytree(s, d, symlinks, ignore)
+        else:
+            shutil.copy2(s, d)
+
 def recursiveAction(src, dest, action, fileOrDir):
     """
     Copy or symlink file from source to dest.  dest can include an absolute or relative path
@@ -44,13 +53,16 @@ def recursiveAction(src, dest, action, fileOrDir):
 
         # Copy according to file/directory behavior
         if fileOrDir == "dir":
-            # shutil.copytree(src, dest, ignore_errors=True, copy_function=copy2)
-            distutils.dir_util.copy_tree(src, dest)
+            copytree(src, dest)
+            # distutils.dir_util.copy_tree(src, dest)
         else:
             shutil.copy2(src, dest, follow_symlinks=False)
 
     # Default symlink behaviour
     else:
+        # Since makedirs would have made this directory as well
+        if fileOrDir == "dir":
+            os.rmdir(dest)
         os.symlink(src, dest)
 
 """
@@ -229,7 +241,7 @@ for _file in configObject.directories:
 
                 if _toBackup == 1:
                     # TODO allow multiple backups to persist
-                    print("  Backing up file")
+                    print("  Backing up folder")
                     recursiveAction(_readFrom, genieCwd + "/.backups/" + _file['placed'], 1, "dir")
 
     # Skip this file now if user skipped, or files were same
@@ -242,10 +254,10 @@ for _file in configObject.directories:
 
     # Symlink if its plain old symlinked based action
     if action == 0:
-        try:
+        if not os.path.islink(_location):
             shutil.rmtree(_location, ignore_errors=True)
-        except:
-            pass
+        else:
+            os.unlink(_location)
         recursiveAction(os.path.join(genieCwd, _file['placed']), _location, 2, "dir")
         print("Symlinked " + _file['placed'] + " to " + _location)
 
