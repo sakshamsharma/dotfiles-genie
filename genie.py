@@ -94,7 +94,7 @@ genieCwd = os.getcwd()
 # Handle and place all files
 for _file in configObject.files:
     _location = os.path.expandvars(_file['location'])
-    # Check if this file already exists
+    _placed = os.path.join(genieCwd, _file['placed'])
     print("Placing file: " + _file['name'])
 
     # Action to be taken on file
@@ -127,10 +127,10 @@ for _file in configObject.files:
         # TODO Allow disabling backups globally in config file as well
         _modified = True
         if not "ignoreDiff" in _file:
-            _modified = not filecmp.cmp(_readFrom, _file['placed'])
+            _modified = not filecmp.cmp(_readFrom, _placed)
         if _modified:
             print("  Version has been modified. Diff:")
-            subprocess.call(["diff", _readFrom, _file['placed']])
+            subprocess.call(["diff", _readFrom, _placed])
             print("")
 
             # 2 means not known
@@ -179,12 +179,12 @@ for _file in configObject.files:
             os.remove(_location)
         except:
             pass
-        recursiveAction(os.path.join(genieCwd, _file['placed']), _location, 2, "file")
+        recursiveAction(_placed, _location, 2, "file")
         print("Symlinked " + _file['placed'] + " to " + _location)
 
     # Copy if user had specified so in the config
     elif action == 3:
-        recursiveAction(os.path.join(genieCwd, _file['placed']), _location, 1, "file")
+        recursiveAction(_placed, _location, 1, "file")
         print("Copied " + _file['placed'] + " to " + _location)
 
 print("")
@@ -192,7 +192,7 @@ print("")
 # Handle and place all folders
 for _file in configObject.directories:
     _location = os.path.expandvars(_file['location'])
-    # Check if this folder already exists
+    _placed = os.path.join(genieCwd, _file['placed'])
     print("Placing folder: " + _file['name'])
 
     # Action to be taken on folder
@@ -261,10 +261,10 @@ for _file in configObject.directories:
             shutil.rmtree(_location, ignore_errors=True)
         else:
             os.unlink(_location)
-        recursiveAction(os.path.join(genieCwd, _file['placed']), _location, 2, "dir")
+        recursiveAction(_placed, _location, 2, "dir")
         print("Symlinked " + _file['placed'] + " to " + _location)
 
     # Copy if user had specified so in the config
     elif action == 3:
-        recursiveAction(os.path.join(genieCwd, _file['placed']), _location, 1, "dir")
+        recursiveAction(_placed, _location, 1, "dir")
         print("Copied " + _file['placed'] + " to " + _location)
