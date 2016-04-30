@@ -84,9 +84,19 @@ def readConfig(fileName):
     fileDes = open(fileName, 'r')
     return yaml.load(fileDes)
 
-# TODO Check for sys.argv and set a default
+# ==================
+# Start of execution
+# ==================
 print("Starting genie..")
-configObject = readConfig(sys.argv[1])
+
+# Check for sys.argv and set a default
+if len(sys.argv) == 1:
+    print("Using default: conf.yml config")
+    configObject = readConfig('conf.yml')
+else:
+    configObject = readConfig(sys.argv[1])
+    if len(sys.argv) != 1:
+        print("Ignoring extra arguments")
 
 # TODO get and set proper cwd
 genieCwd = os.getcwd()
