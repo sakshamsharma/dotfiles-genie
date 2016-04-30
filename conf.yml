@@ -2,20 +2,16 @@
 # genie config file
 
 files:
-  - name: test
-    placed: test
-    location: $HOME/test
-    plainCopy: 1
-  #- name: vimrc
-    #placed: vimrc
-    #location: $HOME/.vimrc
-  #- name: bashrc
-    #placed: .bashrc
-    #location: $HOME/.bashrc
+  - name: vimrc
+    placed: vimrc
+    location: $HOME/.vimrc
+  - name: nviminit
+    placed: nviminit.vim
+    location: $HOME/.config/nvim/init.vim
 
 directories:
-  - name: haha
-    placed: hahavim
-    location: $HOME/hehe
+  - name: vim
+    placed: vim
+    location: $HOME/.vim/
 
 subrepos:

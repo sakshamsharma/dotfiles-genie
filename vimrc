@@ -1,0 +1,1 @@
+source ~/.vim/vivid.vim
