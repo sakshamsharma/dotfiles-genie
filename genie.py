@@ -42,7 +42,7 @@ def recursiveAction(src, dest, action, fileOrDir):
     try:
         os.makedirs(dest_dir)
     except os.error as e:
-        pass #Assume it exists.  This could fail if you don't have permissions, etc...
+        pass #Assume it exists.  This could fail if you don't have permissions
 
 
     # If there's a symlink there already, get it out
@@ -51,13 +51,9 @@ def recursiveAction(src, dest, action, fileOrDir):
 
     # Copy all files, no symlinking
     if action == 1:
-        # Use copy2 to preserve almost all metadata like modification time etc
-        # Do not follow symlinks as it can overwrite the original file too
-
         # Copy according to file/directory behavior
         if fileOrDir == "dir":
             copytree(src, dest)
-            # distutils.dir_util.copy_tree(src, dest)
         else:
             shutil.copy2(src, dest, follow_symlinks=False)
 
@@ -65,7 +61,12 @@ def recursiveAction(src, dest, action, fileOrDir):
     else:
         # Since makedirs would have made this directory as well
         if fileOrDir == "dir":
-            os.rmdir(dest)
+            # Issue with folder not being there
+            # Use try to ignore the error of no such directory
+            try:
+                os.rmdir(dest)
+            except:
+                pass
         os.symlink(src, dest)
 
 """
@@ -90,16 +91,18 @@ def readConfig(fileName):
 print("Starting genie..")
 
 # Check for sys.argv and set a default
+configFileLocation = 'conf.yml'
 if len(sys.argv) == 1:
     print("Using default: conf.yml config")
-    configObject = readConfig('conf.yml')
 else:
-    configObject = readConfig(sys.argv[1])
-    if len(sys.argv) != 1:
+    configFileLocation = sys.argv[1]
+    if len(sys.argv) != 2:
         print("Ignoring extra arguments")
 
-# TODO get and set proper cwd
-genieCwd = os.getcwd()
+configObject = readConfig(configFileLocation)
+
+# Get the absolute location of the config file
+genieCwd = os.path.join(os.getcwd(), configFileLocation.rpartition('/')[0])
 
 # Handle and place all files
 for _file in configObject.files:
