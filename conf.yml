@@ -1,33 +1,45 @@
 !!python/object:__main__.Configuration
 # genie config file
 
+# Commands to execute before beginning with setup
+pre:
+  - name: prezto
+  - command: [
+    'git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"',
+    'setopt EXTENDED_GLOB
+    for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
+    ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+    done',
+]
+
 # Clone these repositories to begin with
 subrepos:
   - name: vim
     origin: https://github.com/sakshamsharma/vivid-vim
     location: vim
-  #- name: emacs
-    #origin: https://github.com/sakshamsharma/max-emacs
-    #location: emacs
-  #- name: xmonad
-    #origin: https://github.com/sakshamsharma/xmonadic-zest
-    #location: xmonad
-  #- name: i3
-    #origin: https://github.com/sakshamsharma/i3-glee
-    #location: i3
-
-# Set up these files
-files:
-  - name: vimrc
-    placed: vimrc
-    location: $HOME/.vimrc
-  - name: nviminit
-    placed: nviminit.vim
-    location: $HOME/.config/nvim/init.vim
+  - name: emacs
+    origin: https://github.com/sakshamsharma/max-emacs
+    location: emacs
+  - name: xmonad
+    origin: https://github.com/sakshamsharma/xmonadic-zest
+    location: xmonad
+  - name: i3
+    origin: https://github.com/sakshamsharma/i3-glee
+    location: i3
+  - name: zpyi
+    origin: https://github.com/sakshamsharma/zpyi
+    location: zpyi
+  - name: zsh
+    origin: https://github.com/sakshamsharma/zsh-fu
+    location: zsh
 
 # Copy over or symlink these repositories
 # Note: the 'placed' field means where is the actual folder (src) for the symlink
 # The location is relative to the location of the conf.yml (this file)
+# Recommendation:
+# Clone your dotfiles via the subrepos category
+# Then symlink the required folder into your home folder
+# This way, all your dotfiles stay in one place
 directories:
   - name: vim
     placed: vim
@@ -35,3 +47,26 @@ directories:
   - name: nvim
     placed: vim
     location: $HOME/.config/nvim
+  - name: zpyi
+    placed: zpyi
+    location: $HOME/.zpyi
+  - name: zsh
+    placed: zsh
+    location: $HOME/.zsh
+
+# Set up these files
+# Recommendation:
+# Use this section to link up the directories above
+files:
+  - name: vimrc
+    placed: vimrc
+    location: $HOME/.vimrc
+  - name: bashrc
+    placed: bashrc
+    location: $HOME/.bashrc
+  - name: zshrc
+    placed: $HOME/.zsh/zshrc
+    location: $HOME/.zshrc
+  - name: zpreztorc
+    placed: $HOME/.zsh/zpreztorc
+    location: $HOME/.zpreztorc

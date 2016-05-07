@@ -111,10 +111,112 @@ for _repo in configObject.subrepos:
     print("Cloning " + _repo['name'])
     subprocess.call(["git", "clone", _origin, _location])
 
+# Handle and place all folders
+for _dir in configObject.directories:
+    _location = os.path.expandvars(_dir['location'])
+    _placed = _dir['placed']
+
+    if _dir['placed'][0] != '/':
+        # This is a relative path
+        # Make it absolute
+        _placed = os.path.join(genieCwd, _dir['placed'])
+
+    print("Placing folder: " + _dir['name'])
+
+    # Fix in case there is a trailing slash
+    # If length is 1, it must be '/' which deserves to stay untouched
+    if len(_location) > 1:
+        _location = _location.rstrip('/')
+
+    # Action to be taken on folder
+    """
+      0 -> Place symlink of the folder there
+      1 -> Don't copy, same folder
+      2 -> User aborted copy
+      3 -> Place the folder there, no symlinks
+    """
+    action = 0
+
+    # Status of this file
+    status = 0
+
+    if os.path.isdir(_location):
+        # Status 1 for folder exists
+        status = 1
+        print("  Already exists")
+
+        _readFrom = _location
+        if os.path.islink(_location):
+            # Status 2 if file is symlinked
+            status = 2
+            _readFrom = os.path.realpath(_location)
+            print("  Already symlinked to " + _readFrom)
+
+        # 2 means not known
+        _toBackup = 2
+        if "action" in _dir:
+            if _dir['action'] == "backup":
+                _toBackup = 1
+            elif _dir['action'] == "nobackup":
+                _toBackup = 0
+            elif _dir['action'] == "donothing":
+                action = 2
+
+        # If nothing was written, ask user
+        if (_toBackup == 1 or _toBackup == 2) and action != 2:
+            if _toBackup == 2:
+                print("  Backup, Replace or skip? (b,r,s): ")
+                inp = input()
+                if inp == "r":
+                    _toBackup = 0
+                elif inp == "s":
+                    _toBackup = 0
+                    action = 2
+                else:
+                    _toBackup = 1
+
+            if _toBackup == 1:
+                # TODO allow multiple backups to persist
+                print("  Backing up folder")
+                recursiveAction(_readFrom, genieCwd + "/.backups/" + _dir['placed'], 1, "dir")
+
+    # Skip this file now if user skipped, or files were same
+    if action == 1 or action == 2:
+        continue
+
+    # See if this file has to be plain copied or not
+    if "plainCopy" in _dir:
+        action = 3
+
+    # Symlink if its plain old symlinked based action
+    if action == 0:
+        if not os.path.islink(_location):
+            shutil.rmtree(_location, ignore_errors=True)
+        else:
+            os.unlink(_location)
+        recursiveAction(_placed, _location, 2, "dir")
+        print("Symlinked " + _dir['placed'] + " to " + _location)
+
+    # Copy if user had specified so in the config
+    elif action == 3:
+        recursiveAction(_placed, _location, 1, "dir")
+        print("Copied " + _dir['placed'] + " to " + _location)
+
+print("")
+print("Placing files now")
+print("")
+
 # Handle and place all files
 for _file in configObject.files:
     _location = os.path.expandvars(_file['location'])
-    _placed = os.path.join(genieCwd, _file['placed'])
+
+    _placed = os.path.expandvars(_file['placed'])
+
+    if _file['placed'][0] != '/':
+        # This is a relative path
+        # Make it absolute
+        _placed = os.path.join(genieCwd, _placed)
+
     print("Placing file: " + _file['name'])
 
     # Action to be taken on file
@@ -206,90 +308,3 @@ for _file in configObject.files:
     elif action == 3:
         recursiveAction(_placed, _location, 1, "file")
         print("Copied " + _file['placed'] + " to " + _location)
-
-print("")
-print("")
-# Handle and place all folders
-for _dir in configObject.directories:
-    _location = os.path.expandvars(_dir['location'])
-    _placed = os.path.join(genieCwd, _dir['placed'])
-    print("Placing folder: " + _dir['name'])
-
-    # Fix in case there is a trailing slash
-    # If length is 1, it must be '/' which deserves to stay untouched
-    if len(_location) > 1:
-        _location = _location.rstrip('/')
-
-    # Action to be taken on folder
-    """
-      0 -> Place symlink of the folder there
-      1 -> Don't copy, same folder
-      2 -> User aborted copy
-      3 -> Place the folder there, no symlinks
-    """
-    action = 0
-
-    # Status of this file
-    status = 0
-
-    if os.path.isdir(_location):
-        # Status 1 for folder exists
-        status = 1
-        print("  Already exists")
-
-        _readFrom = _location
-        if os.path.islink(_location):
-            # Status 2 if file is symlinked
-            status = 2
-            _readFrom = os.path.realpath(_location)
-            print("  Already symlinked to " + _readFrom)
-
-        # 2 means not known
-        _toBackup = 2
-        if "action" in _dir:
-            if _dir['action'] == "backup":
-                _toBackup = 1
-            elif _dir['action'] == "nobackup":
-                _toBackup = 0
-            elif _dir['action'] == "donothing":
-                action = 2
-
-        # If nothing was written, ask user
-        if (_toBackup == 1 or _toBackup == 2) and action != 2:
-            if _toBackup == 2:
-                print("  Backup, Replace or skip? (b,r,s): ")
-                inp = input()
-                if inp == "r":
-                    _toBackup = 0
-                elif inp == "s":
-                    _toBackup = 0
-                    action = 2
-                else:
-                    _toBackup = 1
-
-            if _toBackup == 1:
-                # TODO allow multiple backups to persist
-                print("  Backing up folder")
-                recursiveAction(_readFrom, genieCwd + "/.backups/" + _dir['placed'], 1, "dir")
-
-    # Skip this file now if user skipped, or files were same
-    if action == 1 or action == 2:
-        continue
-
-    # See if this file has to be plain copied or not
-    if "plainCopy" in _dir:
-        action = 3
-
-    # Symlink if its plain old symlinked based action
-    if action == 0:
-        if not os.path.islink(_location):
-            shutil.rmtree(_location, ignore_errors=True)
-        else:
-            os.unlink(_location)
-        recursiveAction(_placed, _location, 2, "dir")
-        print("Symlinked " + _dir['placed'] + " to " + _location)
-
-    # Copy if user had specified so in the config
-    elif action == 3:
-        recursiveAction(_placed, _location, 1, "dir")
-        print("Copied " + _dir['placed'] + " to " + _location)
