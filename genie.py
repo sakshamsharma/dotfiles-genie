@@ -210,10 +210,10 @@ for _file in configObject.files:
 print("")
 print("")
 # Handle and place all folders
-for _file in configObject.directories:
-    _location = os.path.expandvars(_file['location'])
-    _placed = os.path.join(genieCwd, _file['placed'])
-    print("Placing folder: " + _file['name'])
+for _dir in configObject.directories:
+    _location = os.path.expandvars(_dir['location'])
+    _placed = os.path.join(genieCwd, _dir['placed'])
+    print("Placing folder: " + _dir['name'])
 
     # Fix in case there is a trailing slash
     # If length is 1, it must be '/' which deserves to stay untouched
@@ -246,12 +246,12 @@ for _file in configObject.directories:
 
             # 2 means not known
             _toBackup = 2
-            if "action" in _file:
-                if _file['action'] == "backup":
+            if "action" in _dir:
+                if _dir['action'] == "backup":
                     _toBackup = 1
-                elif _file['action'] == "nobackup":
+                elif _dir['action'] == "nobackup":
                     _toBackup = 0
-                elif _file['action'] == "donothing":
+                elif _dir['action'] == "donothing":
                     action = 2
 
             # If nothing was written, ask user
@@ -270,14 +270,14 @@ for _file in configObject.directories:
                 if _toBackup == 1:
                     # TODO allow multiple backups to persist
                     print("  Backing up folder")
-                    recursiveAction(_readFrom, genieCwd + "/.backups/" + _file['placed'], 1, "dir")
+                    recursiveAction(_readFrom, genieCwd + "/.backups/" + _dir['placed'], 1, "dir")
 
     # Skip this file now if user skipped, or files were same
     if action == 1 or action == 2:
         continue
 
     # See if this file has to be plain copied or not
-    if "plainCopy" in _file:
+    if "plainCopy" in _dir:
         action = 3
 
     # Symlink if its plain old symlinked based action
@@ -287,9 +287,9 @@ for _file in configObject.directories:
         else:
             os.unlink(_location)
         recursiveAction(_placed, _location, 2, "dir")
-        print("Symlinked " + _file['placed'] + " to " + _location)
+        print("Symlinked " + _dir['placed'] + " to " + _location)
 
     # Copy if user had specified so in the config
     elif action == 3:
         recursiveAction(_placed, _location, 1, "dir")
-        print("Copied " + _file['placed'] + " to " + _location)
+        print("Copied " + _dir['placed'] + " to " + _location)
