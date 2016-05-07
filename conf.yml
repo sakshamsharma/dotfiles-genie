@@ -1,6 +1,22 @@
 !!python/object:__main__.Configuration
 # genie config file
 
+# Clone these repositories to begin with
+subrepos:
+  - name: vim
+    origin: https://github.com/sakshamsharma/vivid-vim
+    location: vim
+  #- name: emacs
+    #origin: https://github.com/sakshamsharma/max-emacs
+    #location: emacs
+  #- name: xmonad
+    #origin: https://github.com/sakshamsharma/xmonadic-zest
+    #location: xmonad
+  #- name: i3
+    #origin: https://github.com/sakshamsharma/i3-glee
+    #location: i3
+
+# Set up these files
 files:
   - name: vimrc
     placed: vimrc
@@ -9,9 +25,11 @@ files:
     placed: nviminit.vim
     location: $HOME/.config/nvim/init.vim
 
+# Copy over or symlink these repositories
 directories:
   - name: vim
     placed: vim
     location: $HOME/.vim/
-
-subrepos:
+  - name: nvim
+    placed: vim
+    location: $HOME/.vim

@@ -104,6 +104,13 @@ configObject = readConfig(configFileLocation)
 # Get the absolute location of the config file
 genieCwd = os.path.join(os.getcwd(), configFileLocation.rpartition('/')[0])
 
+# Clone all the repos first
+for _repo in configObject.subrepos:
+    _location = os.path.join(genieCwd, os.path.expandvars(_repo['location']))
+    _origin = _repo['origin']
+    print("Cloning " + _repo['name'])
+    subprocess.call(["git", "clone", _origin, _location])
+
 # Handle and place all files
 for _file in configObject.files:
     _location = os.path.expandvars(_file['location'])
@@ -207,6 +214,11 @@ for _file in configObject.directories:
     _location = os.path.expandvars(_file['location'])
     _placed = os.path.join(genieCwd, _file['placed'])
     print("Placing folder: " + _file['name'])
+
+    # Fix in case there is a trailing slash
+    # If length is 1, it must be '/' which deserves to stay untouched
+    if len(_location) > 1:
+        _location = _location.rstrip('/')
 
     # Action to be taken on folder
     """
