@@ -26,10 +26,12 @@ files:
     location: $HOME/.config/nvim/init.vim
 
 # Copy over or symlink these repositories
+# Note: the 'placed' field means where is the actual folder (src) for the symlink
+# The location is relative to the location of the conf.yml (this file)
 directories:
   - name: vim
     placed: vim
-    location: $HOME/.vim/
+    location: $HOME/.vim
   - name: nvim
     placed: vim
-    location: $HOME/.vim
+    location: $HOME/.config/nvim
