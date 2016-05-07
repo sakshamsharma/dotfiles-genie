@@ -244,33 +244,33 @@ for _dir in configObject.directories:
             _readFrom = os.path.realpath(_location)
             print("  Already symlinked to " + _readFrom)
 
-            # 2 means not known
-            _toBackup = 2
-            if "action" in _dir:
-                if _dir['action'] == "backup":
-                    _toBackup = 1
-                elif _dir['action'] == "nobackup":
+        # 2 means not known
+        _toBackup = 2
+        if "action" in _dir:
+            if _dir['action'] == "backup":
+                _toBackup = 1
+            elif _dir['action'] == "nobackup":
+                _toBackup = 0
+            elif _dir['action'] == "donothing":
+                action = 2
+
+        # If nothing was written, ask user
+        if (_toBackup == 1 or _toBackup == 2) and action != 2:
+            if _toBackup == 2:
+                print("  Backup, Replace or skip? (b,r,s): ")
+                inp = input()
+                if inp == "r":
                     _toBackup = 0
-                elif _dir['action'] == "donothing":
+                elif inp == "s":
+                    _toBackup = 0
                     action = 2
+                else:
+                    _toBackup = 1
 
-            # If nothing was written, ask user
-            if (_toBackup == 1 or _toBackup == 2) and action != 2:
-                if _toBackup == 2:
-                    print("  Backup, Replace or skip? (b,r,s): ")
-                    inp = input()
-                    if inp == "r":
-                        _toBackup = 0
-                    elif inp == "s":
-                        _toBackup = 0
-                        action = 2
-                    else:
-                        _toBackup = 1
-
-                if _toBackup == 1:
-                    # TODO allow multiple backups to persist
-                    print("  Backing up folder")
-                    recursiveAction(_readFrom, genieCwd + "/.backups/" + _dir['placed'], 1, "dir")
+            if _toBackup == 1:
+                # TODO allow multiple backups to persist
+                print("  Backing up folder")
+                recursiveAction(_readFrom, genieCwd + "/.backups/" + _dir['placed'], 1, "dir")
 
     # Skip this file now if user skipped, or files were same
     if action == 1 or action == 2:
