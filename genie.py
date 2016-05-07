@@ -104,6 +104,12 @@ configObject = readConfig(configFileLocation)
 # Get the absolute location of the config file
 genieCwd = os.path.join(os.getcwd(), configFileLocation.rpartition('/')[0])
 
+for _action in configObject.pre:
+    print("Executing " + _action['name'])
+    print("--> " + _action['command'])
+    p = subprocess.call([_action['command']], cwd=genieCwd, shell=True)
+    print("")
+
 # Clone all the repos first
 for _repo in configObject.subrepos:
     _location = os.path.join(genieCwd, os.path.expandvars(_repo['location']))
