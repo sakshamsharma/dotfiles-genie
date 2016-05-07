@@ -12,6 +12,14 @@ dotfiles-genie
 
 My configuration management system, a mix of ideas from [GNU stow](https://www.gnu.org/software/stow/), [vcsh](https://github.com/RichiH/vcsh), [Mr](http://joeyh.name/code/mr/), [ConfigManagement](https://github.com/pallavagarwal07/ConfigManagement/) and some other utilities.
 
+## Some awesome things
+* Uses Python, so easy to set up on a fresh installation (I'd have it written in Haskell, but installing GHC isn't exactly a small task)
+* Supports various different types of config managements.
+* Encourages you to keep vast configurations in different repositories, and symlink them as required.
+* A single configuration file to manage all your configs.
+* By default, everything is symlinked. So if you need to modify any config, do it wherever, and later come back to commit and push.
+* All your configs reside in a single folder, easy to track and commit changes.
+
 ## How to use
 1. Place the `genie.py` script at any convenient location.
 2. Copy all your configurations in a convenient folder.
