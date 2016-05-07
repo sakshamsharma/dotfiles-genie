@@ -69,3 +69,11 @@ files:
   - name: zpreztorc
     placed: $HOME/.zsh/zpreztorc
     location: $HOME/.zpreztorc
+
+post:
+  - name: gitUserConfig
+    vars: ["Email (For Git)", "Full Name (For Git)"]
+    command: 'git config --global user.email "%s"
+      && git config --global user.name "%s"'
+  - name: finish
+    command: 'echo "Everything is finished!"'

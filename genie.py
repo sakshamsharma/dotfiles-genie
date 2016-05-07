@@ -18,6 +18,12 @@ except ImportError:
 # Move file and folder stuff to new files
 # Abstract out the asking user for options part into a global helper function
 
+# Ignore the Python 2 style raw_input if it exists
+try:
+    input = raw_input
+except NameError:
+    pass
+
 def copytree(root_src_dir, root_dst_dir):
     for src_dir, dirs, files in os.walk(root_src_dir):
         dst_dir = src_dir.replace(root_src_dir, root_dst_dir, 1)
@@ -85,6 +91,23 @@ def readConfig(fileName):
     fileDes = open(fileName, 'r')
     return yaml.load(fileDes)
 
+# Function to execute commands with optional user inputs
+def commandExecution(_action):
+    print("Executing " + _action['name'])
+    try:
+        _queries = _action['vars']
+        _results = []
+        for query in _queries:
+            tmp = input("Enter " + query + ": ")
+            _results.append(tmp)
+
+        _command = _action['command'] % tuple(_results)
+    except:
+        _command = _action['command']
+    print("--> " + _command)
+    p = subprocess.call(_command, cwd=genieCwd, shell=True)
+    print("")
+
 # ==================
 # Start of execution
 # ==================
@@ -105,10 +128,7 @@ configObject = readConfig(configFileLocation)
 genieCwd = os.path.join(os.getcwd(), configFileLocation.rpartition('/')[0])
 
 for _action in configObject.pre:
-    print("Executing " + _action['name'])
-    print("--> " + _action['command'])
-    p = subprocess.call([_action['command']], cwd=genieCwd, shell=True)
-    print("")
+    commandExecution(_action)
 
 # Clone all the repos first
 for _repo in configObject.subrepos:
@@ -314,3 +334,6 @@ for _file in configObject.files:
     elif action == 3:
         recursiveAction(_placed, _location, 1, "file")
         print("Copied " + _file['placed'] + " to " + _location)
+
+for _action in configObject.post:
+    commandExecution(_action)
