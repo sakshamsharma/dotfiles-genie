@@ -22,7 +22,7 @@ My configuration management system, a mix of ideas from [GNU stow](https://www.g
 
 ## How to use
 1. Place the `genie.py` script at any convenient location.
-2. Copy all your configurations in a convenient folder.
+2. Copy all your configurations in a convenient folder. You don't need to clone repos if they're online. There's a separate way to clone repos automatically (Infact, this is the recommended way)
 3. Place a `conf.yml` config file in that same folder. It is structured using standard YAML syntax. Look at the provided sample one for inspiration.
 4. Run the genie.py script and point it to the configuration file. Example: `./genie.py ./my-dot-files/conf.yml`
 5. Your configs would be linked to your home folder now. You would have symlinks to configs by default, so you can edit them all in one place.
