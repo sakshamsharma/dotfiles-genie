@@ -55,6 +55,9 @@ directories:
   - name: scripts
     placed: scripts
     location: $HOME/.myscripts
+  - name: fonts
+    placed: fonts
+    location: $HOME/.fonts
 
 # Set up these files
 # Recommendation:
