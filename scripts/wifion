@@ -1,0 +1,18 @@
+#! /bin/bash
+# Script to turn on my WiFi interfaces on my laptop.
+
+interface="rtl8723be"
+if [[ `lsmod | grep -E "^rtl8723be" -o` = "$interface"  ]]
+then
+	echo "Driver is loaded."
+else
+	echo "Not loaded."
+	echo "Doing Modprobe"
+	sudo modprobe $interface
+fi
+
+interface=$(rfkill list | grep -E "(LAN)" | grep -E "^[0-9]" -o)
+for x in $interface;
+do
+	rfkill unblock $x
+done

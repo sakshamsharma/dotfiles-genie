@@ -52,6 +52,9 @@ directories:
   - name: zsh
     placed: zsh
     location: $HOME/.zsh
+  - name: scripts
+    placed: scripts
+    location: $HOME/.myscripts
 
 # Set up these files
 # Recommendation:
