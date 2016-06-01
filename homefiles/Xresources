@@ -1,0 +1,68 @@
+! urxvt
+URxvt*buffered: true
+URxvt*cursorBlink: true
+URxvt*underlineColor: yellow
+!URxvt.font: xft:monofur for Powerline:size=14
+URxvt.font: xft:Source Code Pro For Powerline:size=12
+!URxvt.font: xft:Pragmata Pro:size=13
+URxvt*depth: 32
+URxvt*borderless: 1
+URxvt*scrollBar: false
+Urxvt*secondaryScroll:  true    # Enable Shift-PageUp/Down in screen
+URxvt*saveLines: 10000
+URxvt*termName: rxvt-unicode
+
+! To implement clickable URLs
+URxvt.perl-ext-common:      default,matcher,vtwheel,clipboard,url-select,keyboard-select
+URxvt.url-launcher:         /usr/bin/google-chrome-stable
+URxvt.url-select.launcher:  /usr/bin/google-chrome-stable
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+
+URxvt.matcher.button: 1
+URxvt.matcher.rend.0: Uline Bold fg5
+
+! disable the stupid ctrl+shift 'feature'
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.keysym.Shift-Control-C:   perl:clipboard:copy
+
+URxvt.keysym.Mod4-c: perl:clipboard:copy
+URxvt.keysym.Mod4-v: perl:clipboard:paste
+
+xscreensaver.newLoginCommand: dm-tool switch-to-greeter
+
+URxvt*foreground: white
+!URxvt*background: black
+
+*color0:  #2E3436
+*color1:  #a40000
+*color2:  #4E9A06
+*color3:  #C4A000
+*color4:  #3465A4
+*color5:  #75507B
+*color6:  #ce5c00
+*color7:  #babdb9
+*color8:  #555753
+*color9:  #EF2929
+*color10: #8AE234
+*color11: #FCE94F
+*color12: #729FCF
+*color13: #AD7FA8
+*color14: #fcaf3e
+*color15: #EEEEEC
+
+URxvt.transparent:   true
+URxvt.shading:       15
+
+URxvt.depth: 32
+URxvt*background: rgba:0000/0000/0000/cccc
+
+!URxvt.fading: 5
+!URxvt.fadeColor: [0]black
+
+URxvt.saveLines:32767

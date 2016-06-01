@@ -63,6 +63,15 @@ files:
   - name: bashrc
     placed: homefiles/bashrc
     location: $HOME/.bashrc
+  - name: Xmodmap
+    placed: homefiles/Xmodmap
+    location: $HOME/.Xmodmap
+  - name: Xresources
+    placed: homefiles/Xresources
+    location: $HOME/.Xresources
+  - name: xinitrc
+    placed: homefiles/xinitrc
+    location: $HOME/.xinitrc
   - name: zshrc
     placed: $HOME/.zsh/zshrc
     location: $HOME/.zshrc
