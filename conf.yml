@@ -58,10 +58,10 @@ directories:
 # Use this section to link up the directories above
 files:
   - name: vimrc
-    placed: vimrc
+    placed: homefiles/vimrc
     location: $HOME/.vimrc
   - name: bashrc
-    placed: bashrc
+    placed: homefiles/bashrc
     location: $HOME/.bashrc
   - name: zshrc
     placed: $HOME/.zsh/zshrc
