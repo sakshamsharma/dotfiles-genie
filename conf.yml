@@ -14,22 +14,22 @@ pre:
 # Clone these repositories to begin with
 subrepos:
   - name: vim
-    origin: https://github.com/sakshamsharma/vivid-vim
+    origin: git@github.com:sakshamsharma/vivid-vim.git
     location: vim
   - name: emacs
-    origin: https://github.com/sakshamsharma/max-emacs
+    origin: git@github.com:sakshamsharma/max-emacs.git
     location: emacs
   - name: xmonad
-    origin: https://github.com/sakshamsharma/xmonadic-zest
+    origin: git@github.com:sakshamsharma/xmonadic-emacs.git
     location: xmonad
   - name: i3
-    origin: https://github.com/sakshamsharma/i3-glee
+    origin: git@github.com:sakshamsharma/i3-glee.git
     location: i3
   - name: zpyi
-    origin: https://github.com/sakshamsharma/zpyi
+    origin: git@github.com:sakshamsharma/zpyi.git
     location: zpyi
   - name: zsh
-    origin: https://github.com/sakshamsharma/zsh-fu
+    origin: git@github.com:sakshamsharma/zsh-fu.git
     location: zsh
 
 # Copy over or symlink these repositories
@@ -46,6 +46,9 @@ directories:
   - name: nvim
     placed: vim
     location: $HOME/.config/nvim
+  - name: emacs
+    placed: emacs
+    location: $HOME/.emacs.d
   - name: zpyi
     placed: zpyi
     location: $HOME/.zpyi
