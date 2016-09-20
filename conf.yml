@@ -20,7 +20,7 @@ subrepos:
     origin: git@github.com:sakshamsharma/max-emacs.git
     location: emacs
   - name: xmonad
-    origin: git@github.com:sakshamsharma/xmonadic-emacs.git
+    origin: git@github.com:sakshamsharma/xmonadic-zest.git
     location: xmonad
   - name: i3
     origin: git@github.com:sakshamsharma/i3-glee.git
