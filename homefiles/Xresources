@@ -2,20 +2,18 @@
 URxvt*buffered: true
 URxvt*cursorBlink: true
 URxvt*underlineColor: yellow
-!URxvt.font: xft:monofur for Powerline:size=14
-URxvt.font: xft:Source Code Pro For Powerline:size=12
-!URxvt.font: xft:Pragmata Pro:size=13
+!URxvt.font: xft:Source Code Pro For Powerline:size=12
+URxvt.font: xft:Literation Mono Powerline:size=14
 URxvt*depth: 32
 URxvt*borderless: 1
 URxvt*scrollBar: false
 Urxvt*secondaryScroll:  true    # Enable Shift-PageUp/Down in screen
 URxvt*saveLines: 10000
-URxvt*termName: rxvt-unicode
 
 ! To implement clickable URLs
-URxvt.perl-ext-common:      default,matcher,vtwheel,clipboard,url-select,keyboard-select
-URxvt.url-launcher:         /usr/bin/google-chrome-stable
-URxvt.url-select.launcher:  /usr/bin/google-chrome-stable
+URxvt.perl-ext-common:      default,matcher,clipboard,url-select,keyboard-select,clipboard-osc
+URxvt.url-launcher:         /usr/bin/google-chrome-beta
+URxvt.url-select.launcher:  /usr/bin/google-chrome-beta
 URxvt.url-select.underline: true
 URxvt.keysym.M-u:           perl:url-select:select_next
 URxvt.keysym.M-Escape:      perl:keyboard-select:activate
@@ -29,40 +27,69 @@ URxvt.iso14755: false
 URxvt.iso14755_52: false
 
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
-URxvt.keysym.Shift-Control-C:   perl:clipboard:copy
+URxvt.keysym.Shift-Control-C: perl:clipboard:copy
 
 URxvt.keysym.Mod4-c: perl:clipboard:copy
 URxvt.keysym.Mod4-v: perl:clipboard:paste
 
 xscreensaver.newLoginCommand: dm-tool switch-to-greeter
 
-URxvt*foreground: white
-!URxvt*background: black
+! Solarized colors
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
 
-*color0:  #2E3436
-*color1:  #a40000
-*color2:  #4E9A06
-*color3:  #C4A000
-*color4:  #3465A4
-*color5:  #75507B
-*color6:  #ce5c00
-*color7:  #babdb9
-*color8:  #555753
-*color9:  #EF2929
-*color10: #8AE234
-*color11: #FCE94F
-*color12: #729FCF
-*color13: #AD7FA8
-*color14: #fcaf3e
-*color15: #EEEEEC
+URxvt*background:            rgba:1111/1111/1110/cccc
+URxvt*foreground:            S_base0
+URxvt*fadeColor:             S_base03
+URxvt*cursorColor:           S_base1
+URxvt*pointerColorBackground:S_base01
+URxvt*pointerColorForeground:S_base1
 
-URxvt.transparent:   true
-URxvt.shading:       15
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
 
-URxvt.depth: 32
-URxvt*background: rgba:0000/0000/0000/cccc
+!! black dark/light
+URxvt*color0:                S_base02
+URxvt*color8:                S_base03
 
-!URxvt.fading: 5
-!URxvt.fadeColor: [0]black
+!! red dark/light
+URxvt*color1:                S_red
+URxvt*color9:                S_orange
 
-URxvt.saveLines:32767
+!! green dark/light
+URxvt*color2:                S_green
+URxvt*color10:               S_base01
+
+!! yellow dark/light
+URxvt*color3:                S_yellow
+URxvt*color11:               S_base00
+
+!! blue dark/light
+URxvt*color4:                S_blue
+URxvt*color12:               S_base0
+
+!! magenta dark/light
+URxvt*color5:                S_magenta
+URxvt*color13:               S_violet
+
+!! cyan dark/light
+URxvt*color6:                S_cyan
+URxvt*color14:               S_base1
+
+!! white dark/light
+URxvt*color7:                S_base2
+URxvt*color15:               S_base3
+
+URxvt.intensityStyles: false
