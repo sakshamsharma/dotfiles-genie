@@ -5,6 +5,8 @@ interface="rtl8723be"
 if [[ `lsmod | grep -E "^rtl8723be" -o` = "$interface"  ]]
 then
 	echo "Driver is loaded."
+	sudo rmmod $interface
+	sudo modprobe $interface
 else
 	echo "Not loaded."
 	echo "Doing Modprobe"

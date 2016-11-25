@@ -34,9 +34,16 @@ eval `dbus-launch --auto-syntax`
 # Make caps a new control
 setxkbmap -option ctrl:nocaps
 xmodmap ~/.Xmodmap
-urxvtd --quiet --opendisplay --fork
 
-# Enable composing
-xcompmgr -c &
 #trayer --edge top --width 4 --align right --transparent true --SetDockType true --alpha 256&
-exec ssh-agent `stack exec xmonad`
+
+WM=`stack exec xmonad`
+
+xfunction = {
+#urxvtd --quiet --opendisplay --fork
+#(sleep 5 && thunderbird) &
+compton -c -f -b -D 1 --config ~/.compton.conf &
+ssh-agent $WM
+}
+
+exec xfunction
