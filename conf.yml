@@ -69,6 +69,9 @@ files:
   - name: vimrc
     placed: homefiles/vimrc
     location: $HOME/.vimrc
+  - name: tmux
+    placed: homefiles/tmux.conf
+    location: $HOME/.tmux.conf
   - name: bashrc
     placed: homefiles/bashrc
     location: $HOME/.bashrc
