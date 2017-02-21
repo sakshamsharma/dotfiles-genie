@@ -1,2 +1,8 @@
 .backups
 .backups/*
+/*
+!homefiles
+!scripts
+!fonts
+!genie.py
+!README.md
