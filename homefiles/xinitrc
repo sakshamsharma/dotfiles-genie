@@ -37,8 +37,8 @@ xmodmap ~/.Xmodmap
 
 #trayer --edge top --width 4 --align right --transparent true --SetDockType true --alpha 256&
 
-#WM=xmonad
-WM=i3
+WM=xmonad
+#WM=i3
 
 xfunction = {
     compton -c -f -b -D 1 --config ~/.compton.conf &

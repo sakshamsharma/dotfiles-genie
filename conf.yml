@@ -61,6 +61,9 @@ directories:
   - name: fonts
     placed: fonts
     location: $HOME/.fonts
+  - name: taffybar
+    placed: homefiles/taffybar
+    location: $HOME/.config/taffybar
 
 # Set up these files
 # Recommendation:
