@@ -14,22 +14,22 @@ pre:
 # Clone these repositories to begin with
 subrepos:
   - name: vim
-    origin: git@github.com:sakshamsharma/vivid-vim.git
+    origin: https://github.com/sakshamsharma/vivid-vim.git
     location: vim
   - name: emacs
-    origin: git@github.com:sakshamsharma/max-emacs.git
+    origin: https://github.com/sakshamsharma/max-emacs.git
     location: emacs
   - name: xmonad
-    origin: git@github.com:sakshamsharma/xmonadic-zest.git
+    origin: https://github.com/sakshamsharma/xmonadic-zest.git
     location: xmonad
   - name: i3
-    origin: git@github.com:sakshamsharma/i3-glee.git
+    origin: https://github.com/sakshamsharma/i3-glee.git
     location: i3
   - name: zpyi
-    origin: git@github.com:sakshamsharma/zpyi.git
+    origin: https://github.com/sakshamsharma/zpyi.git
     location: zpyi
   - name: zsh
-    origin: git@github.com:sakshamsharma/zsh-fu.git
+    origin: https://github.com/sakshamsharma/zsh-fu.git
     location: zsh
 
 # Copy over or symlink these repositories
@@ -75,9 +75,6 @@ files:
   - name: tmux
     placed: homefiles/tmux.conf
     location: $HOME/.tmux.conf
-  - name: bashrc
-    placed: homefiles/bashrc
-    location: $HOME/.bashrc
   - name: Xmodmap
     placed: homefiles/Xmodmap
     location: $HOME/.Xmodmap
