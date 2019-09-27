@@ -3,46 +3,9 @@
 # ~/.xinitrc
 # Executed by startx (run your window manager from here)
 
-# Set up screens and set background
-if [ `xrandr | grep -c ' connected '` -eq 2 ]; then # dual-monitor
-    if [ `xrandr | grep VGA-1 | grep -c ' connected '` -eq 1 ]; then
-        xrandr --output LVDS-1 --auto --primary --output VGA-1 --auto --right-of LVDS-1
-    fi
-    if [ `xrandr | grep DVI-1 | grep -c ' connected '` -eq 1 ]; then
-        xrandr --output LVDS-1 --auto --primary --output DVI-1 --auto --right-of LVDS-1
-    fi
-    xsetroot -solid \#cccccc
-else
-    xrandr --output LVDS-1 --auto --primary --output VGA-1 --off --output DVI-1 --off
-fi
-
-# For NVIDIA driver (proprietary)
-#xrandr --setprovideroutputsource modesetting NVIDIA-0
-xrandr --auto
-
-xrdb -merge /home/saksham/.Xresources
-
-# To start dbus before other things
-eval `dbus-launch --auto-syntax`
-
-# configure synclient touchpad
-/home/saksham/.myscripts/touchpad.sh
-
-#feh --bg-fill ~/Wallpapers/hack.jpg &
 xset r rate 200 60
-
-# Make caps a new control
-setxkbmap -option ctrl:nocaps
-xmodmap ~/.Xmodmap
-
-#trayer --edge top --width 4 --align right --transparent true --SetDockType true --alpha 256&
-
-WM=xmonad
-#WM=i3
-
-xfunction = {
-    compton -c -f -b -D 1 --config ~/.compton.conf &
-    ssh-agent $WM
-}
-
-exec xfunction
+xrandr --output HDMI-1 --auto --right-of DP-2
+xsetroot -cursor_name left_ptr &
+dunst&
+xscreensaver&
+exec stack exec xmonad
