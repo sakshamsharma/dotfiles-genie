@@ -64,6 +64,9 @@ directories:
   - name: taffybar
     placed: homefiles/taffybar
     location: $HOME/.config/taffybar
+  - name: xmobar
+    placed: homefiles/xmobar
+    location: $HOME/.config/xmobar
 
 # Set up these files
 # Recommendation:
