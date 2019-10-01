@@ -99,8 +99,10 @@ def commandExecution(_action):
         _results = []
         for query in _queries:
             tmp = input("Enter " + query + ": ")
+            if len(tmp) == 0:
+                print("Skipping command because no input: " + _action['command'])
+                return
             _results.append(tmp)
-
         _command = _action['command'] % tuple(_results)
     except:
         _command = _action['command']

@@ -4,7 +4,7 @@
 # Executed by startx (run your window manager from here)
 
 xset r rate 200 60
-xrandr --output HDMI-1 --auto --right-of DP-2
+xrandr --auto
 xsetroot -cursor_name left_ptr &
 dunst&
 xscreensaver&
