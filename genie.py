@@ -89,7 +89,7 @@ class Configuration:
 
 def readConfig(fileName):
     fileDes = open(fileName, 'r')
-    return yaml.load(fileDes)
+    return yaml.load(fileDes, yaml.Loader)
 
 # Function to execute commands with optional user inputs
 def commandExecution(_action):

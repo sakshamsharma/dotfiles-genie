@@ -21,6 +21,7 @@ My configuration management system, a mix of ideas from [GNU stow](https://www.g
 * All your configs reside in a single folder, easy to track and commit changes.
 
 ## How to use
+0. `pip3 install pyyaml`
 1. Place the `genie.py` script at any convenient location.
 2. Copy all your configurations in a convenient folder. You don't need to clone repos if they're online. There's a separate way to clone repos automatically (Infact, this is the recommended way)
 3. Place a `conf.yml` config file in that same folder. It is structured using standard YAML syntax. Look at the provided sample one for inspiration.
